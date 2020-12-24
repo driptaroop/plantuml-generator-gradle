@@ -9,12 +9,14 @@ internal class AsciiDocWrapperConfigTest {
     fun `generate AsciidocWrappedDiagramText`() {
         val text = "test"
         val result = AsciiDocWrapperConfig().createAsciidocWrappedDiagramText(text)
-        expectThat(result.trim()).isEqualTo("""
+        expectThat(result.trim()).isEqualTo(
+            """
             [plantuml, ascii_diagram.png, png]
             |----
             |$text
             |----
-        """.trimMargin().trim())
+        """.trimMargin().trim()
+        )
     }
     @Test
     fun `generate AsciidocWrappedDiagramText custom parameters`() {
@@ -24,11 +26,13 @@ internal class AsciiDocWrapperConfigTest {
             asciidocDiagramName = "test",
             asciidocDiagramBlockDelimiter = ".."
         ).createAsciidocWrappedDiagramText(text)
-        expectThat(result.trim()).isEqualTo("""
+        expectThat(result.trim()).isEqualTo(
+            """
             [plantuml, test.jpg, jpg]
             |..
             |$text
             |..
-        """.trimMargin().trim())
+        """.trimMargin().trim()
+        )
     }
 }

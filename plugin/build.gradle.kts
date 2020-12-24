@@ -21,6 +21,7 @@ dependencies {
     testImplementation(platform("org.junit:junit-bom:5.7.0"))
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     testImplementation("org.junit.jupiter:junit-jupiter-engine")
+    testImplementation("org.apache.commons:commons-lang3:3.11")
 }
 
 gradlePlugin {

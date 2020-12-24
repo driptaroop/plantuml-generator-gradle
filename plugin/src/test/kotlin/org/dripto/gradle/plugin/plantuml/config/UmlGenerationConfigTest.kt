@@ -18,6 +18,7 @@ import strikt.assertions.isA
 import strikt.assertions.isEqualTo
 import strikt.assertions.isFalse
 import strikt.assertions.isNull
+import strikt.assertions.isNullOrBlank
 import java.net.URL
 import java.net.URLClassLoader
 import kotlin.random.Random
@@ -83,9 +84,12 @@ internal class UmlGenerationConfigTest {
         )
 
         val result = config.plantUMLConfig
+
+        println(config.blacklistRegexp)
+        println(config.whitelistRegexp)
         expect {
             with(result) {
-                that(blacklistRegexp).isNull()
+                that(blacklistRegexp).isNullOrBlank()
                 that(scanPackages).hasSize(config.scanPackages.size)
                 that(whitelistRegexp).isEqualTo(config.whitelistRegexp)
                 that(hideClasses).isEqualTo(config.hideClasses)

@@ -35,7 +35,7 @@ data class UmlGenerationConfig(
 
     val plantUMLConfig: PlantUMLConfig
         get() {
-            val loader: ClassLoader = getCompileClassLoader()
+            val loader: ClassLoader = destinationClassloader ?: getCompileClassLoader()
             val configBuilder: PlantUMLConfigBuilder = if (whitelistRegexp.isNullOrBlank()) {
                 PlantUMLConfigBuilder(if (!blacklistRegexp.isNullOrBlank()) blacklistRegexp else null, scanPackages)
             } else {
@@ -50,6 +50,11 @@ data class UmlGenerationConfig(
                 .withMaximumMethodVisibility(maxVisibilityMethods).withJPAAnnotations(addJPAAnnotations).build()
         }
 
+    private fun getCompileClassLoader() =
+        getSourceSet("main") ?. let {
+            URLClassLoader(getClassURLArray(it), Thread.currentThread().contextClassLoader)
+        } ?: throw IllegalStateException("no main source set")
+
     private fun getSourceSet(sourceSetName: String): SourceSet? {
         val sourceSetContainer: SourceSetContainer = project.convention.getPlugin(JavaPluginConvention::class.java).sourceSets
         return sourceSetContainer.findByName(sourceSetName)
@@ -61,8 +66,4 @@ data class UmlGenerationConfig(
             .map { it.toURI().toURL() }
             .toList().toTypedArray()
     }
-    private fun getCompileClassLoader() =
-        getSourceSet("main") ?. let {
-            URLClassLoader(getClassURLArray(it), Thread.currentThread().contextClassLoader)
-        } ?: throw IllegalStateException("no main source set")
 }

@@ -5,12 +5,12 @@ package org.dripto.gradle.plugin.plantuml
 
 import org.gradle.testkit.runner.BuildResult
 import org.gradle.testkit.runner.GradleRunner
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import strikt.api.expectThat
 import strikt.assertions.isTrue
 import java.io.File
-import kotlin.test.AfterTest
-import kotlin.test.BeforeTest
-import kotlin.test.Test
 
 /**
  * A simple functional test for the 'org.dripto.gradle.plugin.plantuml.greeting' plugin.
@@ -26,7 +26,7 @@ class PlantumlGeneratorGradlePluginFunctionalTest {
             }
         """.trimIndent()
 
-    @BeforeTest
+    @BeforeEach
     fun setup() {
         projectDir = File("build/functionalTest")
         projectDir.mkdirs()
@@ -106,7 +106,7 @@ class PlantumlGeneratorGradlePluginFunctionalTest {
         return runner.build()
     }
 
-    @AfterTest
+    @AfterEach
     fun teardown() {
         projectDir.deleteRecursively()
     }

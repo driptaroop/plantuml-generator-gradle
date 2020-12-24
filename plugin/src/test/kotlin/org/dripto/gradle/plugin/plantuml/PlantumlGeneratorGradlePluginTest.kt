@@ -5,10 +5,10 @@ package org.dripto.gradle.plugin.plantuml
 
 import org.dripto.gradle.plugin.plantuml.task.PlantUmlGeneratorTask
 import org.gradle.testfixtures.ProjectBuilder
+import org.junit.jupiter.api.Test
 import strikt.api.expectThat
 import strikt.assertions.isA
 import strikt.assertions.isNotNull
-import kotlin.test.Test
 
 /**
  * A simple unit test for the 'org.dripto.gradle.plugin.plantuml.greeting' plugin.

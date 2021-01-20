@@ -8,7 +8,7 @@ plugins {
     maven
 }
 group = "org.dripto.gradle.plugin.plantuml"
-version = "0.0.2"
+version = "0.0.3"
 description = "Generate plantUml diagram from code using gradle"
 val pluginId = "org.dripto.gradle.plugin.plantuml.plantuml-generator"
 val githubUrl ="https://github.com/driptaroop/plantuml-generator-gradle"

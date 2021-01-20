@@ -21,6 +21,7 @@ open class PlantUmlGeneratorTask : DefaultTask() {
     fun generate() {
         val result = PlantUMLClassDiagramGenerator(config.plantUMLConfig).generateDiagramText()
             .let { if (asciiConfig.enableAsciidocWrapper) asciiConfig.createAsciidocWrappedDiagramText(it) else it }
+        println("Generating Plant UML file in ${project.buildDir}")
         prepFile().writeText(result)
     }
 

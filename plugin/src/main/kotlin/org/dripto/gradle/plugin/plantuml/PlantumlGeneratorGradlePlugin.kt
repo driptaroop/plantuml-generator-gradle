@@ -14,7 +14,6 @@ class PlantumlGeneratorGradlePlugin : Plugin<Project> {
     override fun apply(project: Project) {
         // Register a task
         project.tasks.register("generateUml", PlantUmlGeneratorTask::class.java) { task ->
-            println("Generating Plant UML file in ${project.buildDir}")
             task.group = "generation"
         }
     }

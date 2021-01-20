@@ -1,12 +1,12 @@
 # This is a basic workflow to help you get started with Actions
 
-name: pr-build
+name: build
 
-# Controls when the action will run. 
+# Controls when the action will run.
 on:
-  # Triggers the workflow on pull request events but only for the main and develop branch
-  pull_request:
-    branches: [ main, develop ]
+  # Triggers the workflow on push events but only for the main and develop branch
+  push:
+    branches: [ main ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -22,12 +22,12 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-        
+
       - name: Setup Java JDK
         uses: actions/setup-java@v1.4.3
         with:
           java-version: 1.8
-      
+
       - uses: actions/cache@v2
         with:
           path: |
@@ -36,6 +36,9 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
-            
+
       - name: execute gradle build
         run: ./gradlew build
+
+      - name: publish plugin
+        run: ./gradlew publishPlugins -Pgradle.publish.key=${{ secrets.GRADLE_PUBLISH_KEY }} -Pgradle.publish.secret=${{ secrets.GRADLE_PUBLISH_SECRET }}

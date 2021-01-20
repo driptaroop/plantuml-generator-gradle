@@ -2,12 +2,18 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     `java-gradle-plugin`
-    kotlin("jvm") version "1.3.72"
-    id("org.jmailen.kotlinter") version "2.4.1"
+    id("com.gradle.plugin-publish") version "0.12.0"
+    kotlin("jvm") version "1.4.21"
+    id("org.jmailen.kotlinter") version "3.3.0"
     maven
 }
 group = "org.dripto.gradle.plugin.plantuml"
-version = "0.0.1"
+version = "0.0.3"
+description = "Generate plantUml diagram from code using gradle"
+val pluginId = "org.dripto.gradle.plugin.plantuml.plantuml-generator"
+val githubUrl ="https://github.com/driptaroop/plantuml-generator-gradle"
+val webUrl = "https://github.com/driptaroop/plantuml-generator-gradle"
+val pluginName = "plantUmlGeneratorPlugin"
 
 repositories {
     jcenter()
@@ -26,9 +32,11 @@ dependencies {
 
 gradlePlugin {
     // Define the plugin
-    val plantumlGenerator by plugins.registering {
-        id = "org.dripto.gradle.plugin.plantuml.plantuml-generator"
-        implementationClass = "org.dripto.gradle.plugin.plantuml.PlantumlGeneratorGradlePlugin"
+    plugins{
+        register(pluginName) {
+            id = pluginId
+            implementationClass = "org.dripto.gradle.plugin.plantuml.PlantumlGeneratorGradlePlugin"
+        }
     }
 }
 
@@ -60,4 +68,17 @@ tasks.check {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+pluginBundle {
+    website = webUrl
+    vcsUrl = githubUrl
+    (plugins) {
+        pluginName {
+            description = project.description
+            tags = listOf("kotlin", "plantuml", "diagram", "generator", "gradle")
+            version = project.version.toString()
+            displayName = "PlantUml Generator Gradle Plugin"
+        }
+    }
 }
